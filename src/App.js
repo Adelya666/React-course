@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Count from "./Count";
+import List from "./List";
 
 class Counter extends React.Component {
   state = {
-    counter: 0,
+    value:""
   };
 
   constructor(props) {
@@ -15,28 +16,42 @@ class Counter extends React.Component {
   handleClick() {
     this.setState({ counter: this.state.counter + 1 });
   }
-  componentDidMount() {
-    console.log("component born");
-    this.setState({ counter: 1 });
-  }
-  componentDidUpdate() {
-    console.log("component update");
-  }
+  changetext(event){
 
-  componentWillUnmount() {
-    console.log("component die");
-    
+ 
+this.setState({
+  value: event.target.value
+})    
   }
+  
 
   render() {
-    return this.state.counter === 10 ? (
-      <></>
-    ) : (
-      <div>
-        <Count counter={this.state.counter} />
+    return  (
+      <>
+      <List/>
+      <form onSubmit={(event)=>{
+        event.preventDefault()
+      }}>
 
-        <button onClick={this.handleClick}>Увеличить</button>
-      </div>
+        <input  ref={(ip)=>{
+          this.input=ip
+        }} onChange={(event)=>{
+          this.changetext(event)
+        }} value={this.state.value}>
+        
+      
+        
+        </input>
+        <button disabled={this.state.value.includes("реакт")?true :false }>
+          send
+        </button>
+        <button onClick={()=>{this.input.focus()}}>
+          focus on innput
+        </button>
+         </form>
+      </>
+    
+   
     );
   }
 }
